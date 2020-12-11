@@ -1,32 +1,45 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+    <ele-header :seller="seller"></ele-header>
+    <ele-tab></ele-tab>
+    <keep-alive>
+      <router-view :seller="seller"></router-view>
+    </keep-alive>
   </div>
 </template>
+<script>
+  import {getSeller} from './api'
+  import EleHeader from "./components/EleHeader/EleHeader";
+  import EleTab from "./components/EleTab/EleTab";
 
-<style lang="less">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
+  export default {
+    name:'App',
+    components:{
+      EleHeader,
+      EleTab
+    },
+    data() {
+      return {
+        seller:{}
+      }
+    },
+    created() {
+      this._getSeller()
+    },
+    methods:{
+      async _getSeller() {
+        const res = await getSeller()
+        if(res.code === 200) {
+          this.seller = res.data
+        }
+      }
     }
   }
-}
+</script>
+<style lang="less">
+  #app {
+    max-width: 640px;
+    height: 100%;
+    margin: 0 auto;
+  }
 </style>
