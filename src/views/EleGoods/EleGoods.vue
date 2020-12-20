@@ -9,7 +9,7 @@
             @click="selectMenu(index)"
             :key="index" v-for="(menu,index) in list"
             class="menus-item">
-             <span class="text">
+             <span class="text border-1px">
                <span :class="classMap[menu.type]" v-show="menu.type>0"></span>
                {{menu.name}}
              </span>
@@ -27,16 +27,18 @@
           <li ref="food" :key="index" v-for="(item,index) in list" class="foods-item">
             <h1 class="title">{{item.name}}</h1>
             <ul>
-              <li @click="_viewDetail(food)" :key="index" v-for="(food,index) in item.foods" class="food">
+              <li @click="_viewDetail(food)" :key="index" v-for="(food,index) in item.foods" class="food border-1px">
                 <img
                   class="food-img"
-                  height="57"
-                  width="57"
                   :src="food.icon" alt="">
                 <div class="food-content">
                   <span class="name">{{food.name}}</span>
+                  <span v-show="food.description" class="description">{{food.description}}</span>
                   <span class="sell-count">月售{{food.sellCount}}份,好评率{{food.rating}}%</span>
-                  <span class="price">￥{{food.price}}</span>
+                  <div class="price">
+                    <span class="new-price">￥{{food.price}}</span>
+                    <span v-show="food.oldPrice" class="old-price">￥{{food.oldPrice}}</span>
+                  </div>
                 </div>
                 <div class="cart-control-wrapper">
                   <cart-control :food="food"></cart-control>
@@ -156,13 +158,13 @@
 </script>
 
 <style lang="less" scoped>
+@import '~common/less/mixin.less';
 .ele-goods {
   position: fixed;
   top: 175px;
   bottom: 48px;
   width: 100%;
   display: flex;
-  max-width: 640px;
   .left-menus {
     flex: 0 0 80px;
     width: 80px;
@@ -189,20 +191,20 @@
         display: table-cell;
         vertical-align: middle;
         width: 56px;
-        border-bottom: 1px solid rgba(7,17,27,0.12);
+        .border-1px(rgba(7,17,27,0.12));
         &>.special {
-          background-image: url("./special_3@2x.png");
           width: 12px;
           height: 12px;
           background-size: 12px 12px;
           display: inline-block;
+          .bg-image('special_3');
         }
         &>.discount {
-          background-image: url("./discount_3@2x.png");
           width: 12px;
           height: 12px;
           background-size: 12px 12px;
           display: inline-block;
+          .bg-image('discount_3');
         }
       }
     }
@@ -225,7 +227,7 @@
         position: relative;
         display: flex;
         padding-bottom:18px;
-        border-bottom: 1px solid rgba(7,17,27,0.1);
+        .border-1px(rgba(7,17,27,0.1));
         &:nth-last-child(1) {
           border: none;
         }
@@ -233,6 +235,7 @@
           width: 57px;
           flex: 0 0 57px;
           margin-right: 10px;
+          height: 57px;
         }
         .food-content {
           flex: 1;
@@ -242,6 +245,12 @@
             font-size: 14px;
             color: rgb(7,17,27);
             line-height: 14px;
+          }
+          .description {
+            font-size: 12px;
+            color: rgb(147,153,159);
+            line-height: 16px;
+            margin-top: 8px;
           }
           .sell-count {
             font-size: 12px;
@@ -255,6 +264,13 @@
             font-weight: 700;
             color: #fb131e;
             line-height: 24px;
+            .old-price {
+              font-size: 10px;
+              margin-left: 8px;
+              text-decoration: line-through;
+              color: rgb(147,153,159);
+              font-weight: normal;
+            }
           }
         }
         .cart-control-wrapper {

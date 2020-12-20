@@ -20,8 +20,13 @@
               <span v-show="food.oldPrice" class="old-price">￥{{food.oldPrice}}</span>
             </div>
           </div>
-          <div class="increase-car">
-            <span class="car">加入购物车</span>
+          <transition name="add">
+            <div @click="_addFood" v-show="!food.count || food.count ===0" class="increase-car">
+              加入购物车
+            </div>
+          </transition>
+          <div class="cart-control-warpper">
+            <cart-control :food="food"></cart-control>
           </div>
         </div>
         <ele-spilt></ele-spilt>
@@ -65,6 +70,8 @@
   import EleSpilt from "../EleSpilt/EleSpilt";
   import EleScroll from "../EleScroll/EleScroll";
   import RatingSelect from "../RatingSelect/RatingSelect";
+  import CartControl from "../CartControl/CartControl";
+  import Vue from 'vue'
   const ALL = 2;
     export default {
       name: "FoodDetail",
@@ -79,7 +86,8 @@
       components:{
         EleSpilt,
         EleScroll,
-        RatingSelect
+        RatingSelect,
+        CartControl
       },
       data() {
         return {
@@ -90,6 +98,11 @@
       methods:{
         _hideDetail() {
           this.$emit('hide')
+        },
+        _addFood() {
+          if(!this.food.count) {
+            Vue.set(this.food,'count',1)
+          }
         },
         _select(type) {
           this.selectType = type
@@ -155,6 +168,7 @@
     display: flex;
     justify-content: space-between;
     padding: 18px;
+    position: relative;
     .rating-count {
       .title {
         font-size: 14px;
@@ -189,22 +203,31 @@
       }
     }
     .increase-car {
-      position: relative;
-      .car {
-        display: inline-block;
-        height:24px;
-        width: 74px;
-        background-color: rgb(0,160,220);
-        font-size: 10px;
-        border-radius: 12px;
-        padding: 0 12px;
-        line-height: 24px;
-        text-align: center;
-        color: rgb(255,255,255);
-        position: absolute;
-        bottom: 0;
-        right: 0;
+      height:24px;
+      width: 74px;
+      position: absolute;
+      bottom: 10px;
+      right: 18px;
+      line-height: 24px;
+      text-align: center;
+      background-color: rgb(0,160,220);
+      font-size: 10px;
+      border-radius: 12px;
+      padding: 0 12px;
+      color: rgb(255,255,255);
+      z-index: 5;
+      opacity: 1;
+      &.add-enter,&.add-leave-to {
+        opacity: 0;
       }
+      &.add-enter-active,&.add-leave-active {
+        transition: all 0.5s;
+      }
+    }
+    .cart-control-warpper {
+      position: absolute;
+      bottom: 10px;
+      right: 28px;
     }
   }
   .goods-info {

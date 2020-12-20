@@ -9,8 +9,9 @@
         </div>
         <div :class="{highlight: totalCount>0}" class="price">￥{{totalPrice}}</div>
         <div class="onther">另需配送费￥{{seller.deliveryPrice}}元</div>
+        <div v-show="totalCount>0" class="number-shopping-car">{{totalCount}}</div>
       </div>
-      <div :class="payClass" class="right-car">
+      <div @click.stop="_pay" :class="payClass" class="right-car">
         {{payDesc}}
       </div>
     </div>
@@ -101,7 +102,9 @@
       },
       methods:{
         _showShopContent() {
-          this.listShow = !this.listShow
+          if(this.totalCount > 0) {
+            this.listShow = !this.listShow
+          }
           this.$nextTick(() => {
             this.$refs.content.refresh()
           })
@@ -110,6 +113,15 @@
           this.selectFoods.forEach((item) => {
             item.count =0
           })
+          if(!this.totalCount) {
+            this.listShow = false;
+          }
+        },
+        _pay() {
+          if(this.totalPrice && this.totalPrice >=this.seller.minPrice ) {
+            alert(`您要支付${this.totalPrice}元`)
+          }
+
         }
       },
       components:{
@@ -144,8 +156,6 @@
   width: 100%;
   background-color: #f3f5f7;
   z-index: 100;
-  max-width: 640px;
-  margin: 0 auto;
   &.content-enter,&.content-leave-to {
     transform: translate3d(0,100%,0);
   }
@@ -269,6 +279,19 @@
       font-size: 10px;
       padding-left: 12px;
       color: rgba(255,255,255,0.4);
+    }
+    .number-shopping-car {
+      position: absolute;
+      top: -10px;
+      left: 44px;
+      width: 24px;
+      height: 16px;
+      border-radius: 6px;
+      background-color: #f01610;
+      color: #ffffff;
+      font-size: 9px;
+      line-height: 16px;
+      text-align: center;
     }
   }
   .right-car {

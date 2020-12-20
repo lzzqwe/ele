@@ -32,7 +32,7 @@
           :select-type="selectType"
           :only-content="onlyContent"
         ></rating-select>
-        <div :key="index" class="ratings-wrapper" v-for="(item,index) in ratings">
+        <div :key="index" class="ratings-wrapper border-1px" v-for="(item,index) in ratings">
           <div class="avatar">
             <img height="28px" width="28px" :src="item.avatar" alt="">
           </div>
@@ -106,14 +106,13 @@
 </script>
 
 <style lang="less" scoped>
+@import "~common/less/mixin.less";
 .ratings {
   position: fixed;
   top: 175px;
   bottom: 0;
   width: 100%;
   overflow: hidden;
-  max-width: 640px;
-  margin: 0 auto;
   .ratings-container {
     .overview {
       padding:18px 0;
@@ -149,44 +148,36 @@
         .service-attribute {
           display: flex;
           margin-bottom: 8px;
+          align-items: center;
+          font-size: 12px;
           .title {
-            font-size: 12px;
             line-height: 12px;
             margin-right: 12px;
           }
           .number {
             margin-left: 12px;
-            font-size: 12px;
             line-height: 18px;
             color: rgb(255,153,0);
           }
         }
         .delivery-time {
+          font-size: 12px;
+          line-height: 18px;
           .time {
-            font-size: 12px;
             color: rgb(7,17,27);
-            line-height: 18px;
             margin-right: 12px;
           }
           .minute {
-            font-size: 12px;
             color: rgb(147,153,159);
-            line-height: 18px;
           }
         }
       }
-    }
-    .spilt {
-      height: 16px;
-      border-bottom: 1px solid #e7e7e7;
-      border-top: 1px solid #e7e7e7;
-      background-color: #f3f6f6;
     }
     .ratings-wrapper {
       display: flex;
       margin: 18px 18px 0 18px;
       padding-bottom: 18px;
-      border-bottom: 1px solid #e8e8e8;
+      .border-1px(#e8e8e8);
       &:nth-last-child(1) {
         border-bottom: none;
       }

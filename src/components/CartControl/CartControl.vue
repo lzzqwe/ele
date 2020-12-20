@@ -3,7 +3,9 @@
       <transition name="move">
         <span @click.stop="_decrease"  v-show="food.count>0" class="iconfont iconicon_roundreduce"></span>
       </transition>
-      <span v-show="food.count>0" class="number">{{this.food.count}}</span>
+      <transition name="num">
+        <span v-show="food.count>0" class="number">{{this.food.count}}</span>
+      </transition>
       <span @click.stop="_increase" class="iconfont iconplus-circle-fill
 "></span>
     </div>
@@ -53,10 +55,10 @@
     line-height: 24px;
     opacity: 1;
     &.move-enter,&.move-leave-to {
-      opacity: 0;
+      transform: translateX(24px) rotate(180deg);
     }
     &.move-enter-active,&.move-leave-active {
-      transition: all 1s linear;
+      transition: all 0.5s linear;
     }
   }
   .number {
@@ -65,6 +67,14 @@
     line-height: 24px;
     color: rgb(147,153,159);
     padding: 0 6px;
+    opacity: 1;
+    width: 12px;
+    &.num-enter,&.enter-leave-to {
+      opacity: 0;
+    }
+    &.num-enter-active,&.num-leave-active {
+      transition: all 0.5s;
+    }
   }
   .iconplus-circle-fill {
     font-size: 24px;

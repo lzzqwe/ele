@@ -49,6 +49,7 @@
 </script>
 
 <style lang="less" scoped>
+  @import "~common/less/mixin.less";
 .detail {
   position: fixed;
   top: 0;
@@ -128,19 +129,19 @@
         margin-right: 6px;
         background-color: #f3f6f6;
         &.decrease {
-          background-image: url("decrease_4@2x.png");
+          .bg-image('decrease_4');
         }
         &.discount {
-          background-image: url("discount_4@2x.png");
+          .bg-image('discount_4');
         }
         &.special {
-          background-image: url("special_4@2x.png");
+          .bg-image('special_4');
         }
         &.invoice {
-          background-image: url("invoice_4@2x.png");
+          .bg-image('invoice_4');
         }
         &.guarantee {
-          background-image: url("guarantee_4@2x.png");
+          .bg-image('guarantee_4');
         }
       }
     }

@@ -70,6 +70,7 @@
 </script>
 
 <style lang="less" scoped>
+  @import '~common/less/mixin.less';
 .header {
   position: relative;
   background-color: rgba(7,17,27,0.5);
@@ -91,12 +92,12 @@
         display: flex;
         margin-top: 2px;
         .brand {
-          background-image: url("./brand@2x.png");
           background-size: 30px 18px;
           background-repeat: no-repeat;
           width: 30px;
           height: 18px;
           margin-right: 6px;
+          .bg-image('brand')
         }
         .text {
           font-size: 16px;
@@ -119,12 +120,12 @@
         line-height: 12px;
         display: flex;
         .decease {
-          background-image: url("./decrease_1@2x.png");
           background-size: 12px 12px;
           width: 12px;
           height: 12px;
           background-repeat: no-repeat;
           margin-right: 2px;
+          .bg-image('decrease_1')
         }
       }
     }
@@ -159,7 +160,7 @@
       color: rgb(255,255,255);
     }
     .title {
-      background-image: url("./bulletin@2x.png");
+      .bg-image('bulletin');
       width: 22px;
       height: 12px;
       background-size: 22px 12px;

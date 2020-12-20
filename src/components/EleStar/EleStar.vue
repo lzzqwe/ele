@@ -49,6 +49,7 @@
 </script>
 
 <style lang="less" scoped>
+  @import "~common/less/mixin.less";
   .star {
     &.star-48 {
       .star-item {
@@ -56,15 +57,18 @@
         height: 19px;
         background-size: 20px 19px;
         display: inline-block;
-        margin-left: 6px;
+        margin-right: 6px;
+        &:last-child{
+          margin-right: 0;
+        }
         &.on {
-          background-image: url("star48_on@2x.png");
+          .bg-image('star48_on');
         }
         &.off {
-          background-image: url("star48_off@2x.png");
+          .bg-image('star48_off');
         }
         &.half {
-          background-image: url("star48_half@2x.png");
+          .bg-image('star48_half');
         }
       }
     }
@@ -74,15 +78,18 @@
         height: 14.5px;
         background-size: 15px 14.5px;
         display: inline-block;
-        margin-left: 6px;
+        margin-right: 6px;
+        &:last-child{
+          margin-right: 0;
+        }
         &.on {
-          background-image: url("star36_on@2x.png");
+          .bg-image('star36_on');
         }
         &.half {
-          background-image: url("star36_half@2x.png");
+          .bg-image('star36_half');
         }
         &.off {
-          background-image: url("star36_off@2x.png");
+          .bg-image('star36_off');
         }
       }
     }
@@ -92,15 +99,18 @@
         height: 9.5px;
         background-size: 10px 9.5px;
         display: inline-block;
-        margin-left: 6px;
+        margin-right: 6px;
+        &:last-child{
+          margin-right: 0;
+        }
         &.on {
-          background-image: url("star24_on@2x.png");
+          .bg-image('star24_on');
         }
         &.half {
-          background-image: url("star24_half@2x.png");
+          .bg-image('star24_half');
         }
         &.off {
-          background-image: url("star24_off@2x.png");
+          .bg-image('star24_off');
         }
       }
     }

@@ -1,7 +1,7 @@
 <template>
     <ele-scroll class="seller">
       <div class="seller-content">
-        <div class="overview">
+        <div class="overview border-1px">
           <div class="title">
             <h1 class="text">{{seller.name}}</h1>
             <div class="sale">
@@ -10,9 +10,9 @@
               <span class="count">月售{{seller.sellCount}}单</span>
             </div>
           </div>
-          <div class="favorite">
-            <span class="iconfont iconshoucang"></span>
-            <span class="complate">已收藏</span>
+          <div :class="{active:isActive}" @click="isFavorite" class="favorite">
+            <span class="iconfont iconshoucang1"></span>
+            <span class="complate">{{favoriteDesc}}</span>
           </div>
         </div>
         <div class="delivery">
@@ -38,12 +38,12 @@
             </div>
           </div>
         </div>
-        <div class="spilt"></div>
+        <ele-spilt></ele-spilt>
         <div class="notice-active">
           <h1 class="title">公告与活动</h1>
-          <p class="details">{{seller.bulletin}}</p>
+          <p class="details border-1px">{{seller.bulletin}}</p>
           <ul class="supports" v-if="seller.supports.length >0">
-            <li :key="index" v-for="(item,index) in seller.supports" class="support-item">
+            <li :key="index" v-for="(item,index) in seller.supports" class="support-item border-1px">
               <span :class="classMap[item.type]" class="icon"></span><span>{{item.description}}</span>
             </li>
           </ul>
@@ -63,7 +63,7 @@
         <div class="seller-info">
           <h1 class="title">商家信息</h1>
           <ul class="infos">
-            <li :key="index" v-for="(info,index) in seller.infos " class="info-item">
+            <li :key="index" v-for="(info,index) in seller.infos " class="info-item border-1px">
               {{info}}
             </li>
           </ul>
@@ -80,15 +80,30 @@
       name: "EleSeller",
       data() {
         return {
-          scrollX:true
+          scrollX:true,
+          isActive:false
         }
       },
       created() {
         this.classMap = ['decease','discount','special','invoice','guarantee']
       },
+      computed:{
+        favoriteDesc() {
+          if(! this.isActive) {
+            return '收藏'
+          } else {
+            return '已收藏'
+          }
+        }
+      },
       props:{
         seller:{
           type:Object
+        }
+      },
+      methods:{
+        isFavorite() {
+          this.isActive =!this.isActive
         }
       },
       components:{
@@ -100,22 +115,22 @@
 </script>
 
 <style lang="less" scoped>
+  @import "~common/less/mixin.less";
 .seller {
   position: fixed;
   top: 175px;
   bottom: 0;
   width: 100%;
   overflow: hidden;
-  max-width: 640px;
-  margin: 0 auto;
   .seller-content {
+    border: none;
     .overview {
       display: flex;
       justify-content: space-between;
       margin: 0 18px 0 18px;
       padding-bottom: 18px;
       padding-top: 18px;
-      border-bottom: 1px solid rgba(7,17,27,0.1);
+      .border-1px(rgba(7,17,27,0.1));
       .title {
         .text {
           font-size: 14px;
@@ -125,15 +140,14 @@
         }
         .sale {
           display: flex;
+          font-size: 10px;
+          color: rgb(77,85,93);
+          line-height: 18px;
           .num {
-            font-size: 10px;
-            color: rgb(77,85,93);
+            margin-left: 8px;
           }
           .count {
             margin-left: 12px;
-            font-size: 10px;
-            color: rgb(77,85,93);
-            line-height: 18px;
           }
         }
       }
@@ -141,8 +155,17 @@
         display: flex;
         flex-direction: column;
         text-align: center;
-        .iconshoucang {
+        width: 50px;
+        &.active {
+          .iconshoucang1 {
+            color: red;
+          }
+        }
+        .iconshoucang1 {
           margin-bottom: 4px;
+          font-size: 24px;
+          line-height: 24px;
+          color: #ccc;
         }
         .complate {
           font-size: 10px;
@@ -179,14 +202,9 @@
         }
       }
     }
-    .spilt {
-      height: 16px;
-      border-bottom: 1px solid #e4e7e7;
-      border-top: 1px solid #e4e7e7;
-      background-color: #f3f6f6;
-    }
     .notice-active {
       margin: 18px;
+      border: none;
       .title {
         font-size: 14px;
         margin-bottom: 8px;
@@ -197,7 +215,7 @@
         line-height: 24px;
         margin-left: 12px;
         padding-bottom: 16px;
-        border-bottom: 1px solid rgba(7,17,27,0.1);
+        .border-1px(rgba(7,17,27,0.1));
       }
       .supports {
         .support-item {
@@ -207,9 +225,11 @@
           line-height: 16px;
           display: flex;
           align-items: center;
-          border-bottom: 1px solid rgba(7,17,27,0.1);
+          .border-1px(rgba(7,17,27,0.1));
           &:nth-last-child(1) {
-            border: none;
+            &::after {
+              border: none;
+            }
           }
           .icon {
             display: inline-block;
@@ -218,19 +238,19 @@
             width: 16px;
             height: 16px;
             &.decease {
-              background-image: url("decrease_4@2x.png");
+              .bg-image('decrease_4');
             }
             &.discount {
-              background-image: url("discount_4@2x.png");
+              .bg-image('discount_4');
             }
             &.special {
-              background-image: url("special_4@2x.png");
+              .bg-image('special_4');
             }
             &.invoice {
-              background-image: url("invoice_4@2x.png");
+              .bg-image('invoice_4');
             }
             &.guarantee {
-              background-image: url("guarantee_4@2x.png");
+              .bg-image('guarantee_4');
             }
           }
         }
@@ -260,19 +280,25 @@
     .seller-info {
       margin: 18px 18px 0 18px;
       padding-bottom: 18px;
+      border: none;
       .title {
         font-size: 14px;
         font-weight: 600;
         margin-bottom: 12px;
       }
       .infos {
+        margin-left: 12px;
         .info-item {
           padding: 16px 0;
-          margin-left: 12px;
-          border-top: 1px solid rgba(7,17,27,0.1);
+          .border-1px(rgba(7,17,27,0.1));
           line-height: 16px;
           font-size: 12px;
           color: rgb(7,17,27);
+          &:nth-last-child(1) {
+            &::after {
+              border: none;
+            }
+          }
         }
       }
     }
